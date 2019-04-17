@@ -274,12 +274,14 @@ public:
         return Vector2 (abs (x), abs (y));
     }
     
-    /// 
+    /// Returns the distance between both vectors.
     inline double distance (const Vector2& other) const
     {
         return sqrt ((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y));
     }
     
+    /// Returns the squared distance between both vectors. This is faster for comparisons as it saves 
+    /// on one sqrt operation.
     inline double sqr_distance (const Vector2& other) const
     {
         return (x - other.x) * (x - other.x) + (y - other.y) * (y - other.y);
