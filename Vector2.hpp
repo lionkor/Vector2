@@ -58,6 +58,13 @@ public:
         : x (), y ()
     {}
     
+    /// Templated conversion operator
+    template<typename to_T>
+    operator Vector2<to_T> () const
+    {
+        return Vector2<to_T> (static_cast<to_T> (x), static_cast<to_T> (y));
+    }
+    
     Vector2& operator= (const Vector2& rhs)
     {
         x = rhs.x;
