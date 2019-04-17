@@ -1,5 +1,7 @@
 /* File "Vector2.hpp" created April 2019
  * 
+ * GitHub: https://github.com/lionkor/Vector2
+ * 
  * MIT License
  * 
  * Copyright (c) 2019 Lion Kortlepel
@@ -182,7 +184,7 @@ public:
     }
     
     template<typename lhs_T>
-    friend Vector2 operator+ (const lhs_T& lhs, const Vector2& rhs)
+    friend Vector2 operator+ (const lhs_T& lhs, const Vector2& rhs) 
     {
         return Vector2 (lhs + rhs.x, lhs + rhs.y);
     }
