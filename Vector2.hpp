@@ -172,6 +172,30 @@ public:
         return Vector2 (x * rhs, y * rhs);
     }
     
+    template<typename lhs_T>
+    friend Vector2 operator+ (const lhs_T& lhs, const Vector2& rhs)
+    {
+        return Vector2 (lhs + rhs.x, lhs + rhs.y);
+    }
+    
+    template<typename lhs_T>
+    friend Vector2 operator- (const lhs_T& lhs, const Vector2& rhs)
+    {
+        return Vector2 (lhs - rhs.x, lhs - rhs.y);
+    }
+    
+    template<typename lhs_T>
+    friend Vector2 operator* (const lhs_T& lhs, const Vector2& rhs)
+    {
+        return Vector2 (lhs * rhs.x, lhs * rhs.y);
+    }
+    
+    template<typename lhs_T>
+    friend Vector2 operator/ (const lhs_T& lhs, const Vector2& rhs)
+    {
+        return Vector2 (lhs / rhs.x, lhs / rhs.y);
+    }
+    
     template<typename rhs_T>
     Vector2 operator/ (const rhs_T& rhs) const
     {
@@ -251,26 +275,49 @@ public:
     }
     
     /// Linearly interpolates between this Vector2 and the given Vector2 using the provided value.
-    inline Vector2 lerp (const Vector2& other, double value) {
+    inline Vector2 lerp (const Vector2& other, double value) const
+    {
         if (value > 1.0)
+        {
             return other;
+        }
         else if (value < 0.0)
+        {
             return *this;
-        return Vector2 (x + (other.x - x) * value,
-                        y + (other.y - y) * value);
+        }
+        else
+        {
+            return Vector2 (x + (other.x - x) * value,
+                            y + (other.y - y) * value);    
+        }
     }
     
     /// Linearly interpolates between this Vector2 and the given Vector2 using the provided value.
     /// This version does not clamp between the two Vectors.
-    inline Vector2 lerp_unclamped (const Vector2& other, double value) {
+    inline Vector2 lerp_unclamped (const Vector2& other, double value) const
+    {
         return Vector2 (x + (other.x - x) * value,
                         y + (other.y - y) * value);
     }
     
     /// Returns a normalized copy of this vector. A normalized vector has magnitude/length equal to 1.0.
-    inline Vector2 normalized ()
+    inline Vector2 normalized () const
     {
         return *this / sqrt (x * x + y * y);
+    }
+    
+    /// Returns a vector with the elements equal to the square root of the elements of this vector. 
+    inline Vector2 square_root () const
+    {
+        return Vector2 (sqrt (x), sqrt (y));
+    }
+    
+    /// Returns the reflection vector for this vector reflecting off a surface with the specified normal
+    /// vector.
+    inline Vector2 reflected (const Vector2& normal) const
+    {
+        Vector2 n = normal.normalized ();
+        return static_cast<Vector2> (*this) - 2.0 * (static_cast<Vector2> (*this).dot (n)) * n;
     }
 };
 
