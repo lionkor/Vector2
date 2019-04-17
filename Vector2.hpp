@@ -1,13 +1,23 @@
 /* File "Vector2.hpp" created April 2019
- * Copyright (c) Lion Kortlepel 2019
  * 
- * This templated class contains all common operations for a 2D Vector.
- * I decided to document everything so that even someone not quite familiar
- * with vector maths could confidently use it.
+ * MIT License
+ * 
+ * Copyright (c) 2019 Lion Kortlepel
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the 
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to 
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the 
+ * Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE 
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR 
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * 
  */
-
-
-
 
 #ifndef VECTOR2_HPP
 #define VECTOR2_HPP
@@ -20,13 +30,7 @@
 template<typename T>
 class Vector2
 {
-public:
-    /// Vector2 with both elements set to 1.0.
-    static const Vector2 one  = Vector2 (1.0, 1.0);
-    
-    /// Vector2 with both elements set to 0.0.
-    static const Vector2 zero = Vector2 (0.0, 0.0);
-    
+public:    
     /// First element of the Vector2.
     T x;
     /// Second element of the Vector2.
@@ -125,46 +129,51 @@ public:
         return *this;
     }
     
-    Vector2 operator+ (const Vector2& rhs)
+    Vector2 operator- () const
+    {
+        return Vector2 (-x, -y);
+    }
+    
+    Vector2 operator+ (const Vector2& rhs) const
     {
         return Vector2 (x + rhs.x, y + rhs.y);
     }
     
-    Vector2 operator- (const Vector2& rhs)
+    Vector2 operator- (const Vector2& rhs) const
     {
         return Vector2 (x - rhs.x, y - rhs.y);
     }
     
-    Vector2 operator* (const Vector2& rhs)
+    Vector2 operator* (const Vector2& rhs) const 
     {
         return Vector2 (x * rhs.x, y * rhs.y);
     }
     
-    Vector2 operator/ (const Vector2& rhs)
+    Vector2 operator/ (const Vector2& rhs) const
     {
         return Vector2 (x / rhs.x, y / rhs.y);
     }
     
     template<typename rhs_T>
-    Vector2 operator+ (const rhs_T& rhs)
+    Vector2 operator+ (const rhs_T& rhs) const
     {
         return Vector2 (x + rhs, y + rhs);
     }
     
     template<typename rhs_T>
-    Vector2 operator- (const rhs_T& rhs)
+    Vector2 operator- (const rhs_T& rhs) const
     {
         return Vector2 (x - rhs, y - rhs);
     }
     
     template<typename rhs_T>
-    Vector2 operator* (const rhs_T& rhs)
+    Vector2 operator* (const rhs_T& rhs) const
     {
         return Vector2 (x * rhs, y * rhs);
     }
     
     template<typename rhs_T>
-    Vector2 operator/ (const rhs_T& rhs)
+    Vector2 operator/ (const rhs_T& rhs) const
     {
         return Vector2 (x / rhs, y / rhs);
     }
@@ -205,20 +214,64 @@ public:
     
     // vector specific mathematical operations
     
-    
-    double dot (const Vector2& rhs) const
+    /// Returns the dot product of two vectors.
+    inline double dot (const Vector2& rhs) const
     {
         return x * rhs.x + y * rhs.y;
     }
     
     /// Returns magnitude ("length") of the vector.
-    double magnitude () const
+    inline double magnitude () const
     {
-        
+        return sqrt (x * x + y * y);
     }
     
+    /// Returns the squared magnitude ("length") of the vector. This saves one sqrt operation and 
+    /// is therefore significant faster for comparing two vector magnitudes.
+    inline double sqr_magnitude () const
+    {
+        return x * x + y * y;
+    }
+    
+    /// Returns a vector with all elements as absolute values.
+    inline Vector2 absolute () const
+    {
+        return Vector2 (abs (x), abs (y));
+    }
+    
+    /// 
+    inline double distance (const Vector2& other) const
+    {
+        return sqrt ((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y));
+    }
+    
+    inline double sqr_distance (const Vector2& other) const
+    {
+        return (x - other.x) * (x - other.x) + (y - other.y) * (y - other.y);
+    }
+    
+    /// Linearly interpolates between this Vector2 and the given Vector2 using the provided value.
+    inline Vector2 lerp (const Vector2& other, double value) {
+        if (value > 1.0)
+            return other;
+        else if (value < 0.0)
+            return *this;
+        return Vector2 (x + (other.x - x) * value,
+                        y + (other.y - y) * value);
+    }
+    
+    /// Linearly interpolates between this Vector2 and the given Vector2 using the provided value.
+    /// This version does not clamp between the two Vectors.
+    inline Vector2 lerp_unclamped (const Vector2& other, double value) {
+        return Vector2 (x + (other.x - x) * value,
+                        y + (other.y - y) * value);
+    }
+    
+    inline Vector2 normalized ()
+    {
+        return Vector2 (); // TODO finish
+    }
 };
-
 
 // common type typedefs
 
@@ -242,6 +295,8 @@ typedef Vector2<unsigned long>      Vector2ul;
 typedef Vector2<signed long long>   Vector2ll;
 /// unsigned long long
 typedef Vector2<unsigned long long> Vector2ull;
+// /// bool
+// typedef Vector2<bool>               Vector2b;
 
 // int_fast typedefs
 
