@@ -25,6 +25,8 @@
 #include <ostream>
 #include <math.h>
 
+static const double VECTOR2_MATH_PI = 3.14159265358979323846;
+
 /// Represents a 2D vector with two elements of type T and implements
 /// all common operations associated with it.
 template<typename T>
@@ -318,6 +320,25 @@ public:
     {
         Vector2 n = normal.normalized ();
         return static_cast<Vector2> (*this) - 2.0 * (static_cast<Vector2> (*this).dot (n)) * n;
+    }
+    
+    /// Returns a copy of this Vector2 rotated by the given number of degrees. Using rotated_rad is faster
+    /// if you already have radians.
+    inline Vector2 rotated_deg (double angle_degrees) const
+    {
+        // convert to radians
+        double radians = angle_degrees * (VECTOR2_MATH_PI / 180.0);
+        return Vector2 (
+                        x * sin (radians) + x * cos (radians),
+                        x * cos (radians) - y * sin (radians));
+    }
+    
+    /// Returns a copy of this Vector2 rotated by the given number of degrees. For degrees use
+    /// rotated_deg.
+    inline Vector2 rotated_rad (double angle_radians) const
+    {
+        return Vector2 (x * cos (angle_radians) - y * sin (angle_radians),
+                        x * sin (angle_radians) + x * cos (angle_radians));
     }
 };
 
