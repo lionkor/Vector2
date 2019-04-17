@@ -9,7 +9,7 @@
 - [x] License (MIT)
 - [ ] Full in-source documentation
 - [x] Common operations like normalizing, dot/cross/scalar product, distance, magnitude, etc.
-- [ ] Extra fancy opeations like ~~linear interpolation~~, ~~abs~~, rotation, ~~reflection~~
+- [x] Extra fancy operations like linear interpolation, abs, rotation, reflection
 
 ## Overview
 
