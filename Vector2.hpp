@@ -267,10 +267,13 @@ public:
                         y + (other.y - y) * value);
     }
     
+    /// Returns a normalized copy of this vector. A normalized vector has magnitude/length equal to 1.0.
     inline Vector2 normalized ()
     {
-        return Vector2 (); // TODO finish
+        return *this / sqrt (x * x + y * y);
     }
+    
+    
 };
 
 // common type typedefs
