@@ -8,7 +8,7 @@
 - [x] Templated operators
 - [x] License
 - [ ] Full in-source documentation
-- [ ] Common operations like normalizing, dot/cross/scalar product, distance, magnitude, etc.
+- [x] Common operations like normalizing, dot/cross/scalar product, distance, magnitude, etc.
 - [ ] Extra fancy opeations like linear interpolation, abs, rotation, reflection
 
 ## Overview
