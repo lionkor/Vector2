@@ -5,30 +5,41 @@
 
 #include <ostream>
 
-/// Represents a 2D vector with 2 components of type T
+/// Represents a 2D vector with two elements of type T and implements
+/// all common operations associated with it.
 template<typename T>
 class Vector2
 {
 public:
+    /// Vector2 with both elements set to 1.0.
+    static const Vector2 one = Vector2 (1.0, 1.0);
+    /// Vector2 with both elements set to 0.0.
+    static const Vector2 zero = Vector2 (0.0, 0.0);
     
+    /// First element of the Vector2.
     T x;
+    /// Second element of the Vector2.
     T y;
     
+    /// Constructor for Vector2 with first element equal to x and second element equal to y.
     Vector2 (const T& x, const T& y)
         : x (x), y (y)
     {}
     
+    /// Copy constructor
     Vector2 (const Vector2& vector)
         : x (vector.x), y (vector.y)
     {}
     
+    /// Constructor for Vector2 with both elements equal to n. 
     explicit Vector2 (const T& n)
         : x (n), y (n)
     {}
     
+    /// Constructor for Vector2 with both elements equal to their defaults.
     Vector2 ()
-        : x (0), y (0)
-    {} // maybe not a good idea depending on T
+        : x (), y ()
+    {}
     
     Vector2& operator= (const Vector2& rhs)
     {
@@ -183,9 +194,14 @@ public:
     
     // vector specific mathematical operations
     
-    /// Magnitude can be described as the length of the vector.
-    /// \return magnitude ("length") of the vector.
-    double magnitude ()
+    
+    double dot (const Vector2& rhs) const
+    {
+        return x * rhs.x + y * rhs.y;
+    }
+    
+    /// Returns magnitude ("length") of the vector.
+    double magnitude () const
     {
         
     }
