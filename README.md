@@ -1,5 +1,7 @@
 # Vector2
 
+Contact: development@kortlepel.com
+
 ## Overview
 
 This is a templated header-only class for a 2D Vector, written in C++17, with all common vector operations and some useful additional methods.
