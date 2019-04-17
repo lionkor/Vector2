@@ -27,7 +27,13 @@
 #include <ostream>
 #include <math.h>
 
-static constexpr double VECTOR2_MATH_PI = 3.14159265358979323846;
+#ifndef VECTOR2_DOUBLE
+#define VECTOR2_DOUBLE double
+#endif
+
+// defining it to 1000 digits so it can be used with a much more precise VECTOR2_DOUBLE type than double and still 
+// achieve high accuracy.
+static constexpr VECTOR2_DOUBLE VECTOR2_MATH_PI = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989;
 
 /// Represents a 2D vector with two elements of type T and implements
 /// all common operations associated with it.
@@ -250,20 +256,20 @@ public:
     // vector specific mathematical operations
     
     /// Returns the dot product of two vectors.
-    inline double dot (const Vector2& rhs) const
+    inline VECTOR2_DOUBLE dot (const Vector2& rhs) const
     {
         return x * rhs.x + y * rhs.y;
     }
     
     /// Returns magnitude ("length") of the vector.
-    inline double magnitude () const
+    inline VECTOR2_DOUBLE magnitude () const
     {
         return sqrt (x * x + y * y);
     }
     
     /// Returns the squared magnitude ("length") of the vector. This saves one sqrt operation and 
     /// is therefore significant faster for comparing two vector magnitudes.
-    inline double sqr_magnitude () const
+    inline VECTOR2_DOUBLE sqr_magnitude () const
     {
         return x * x + y * y;
     }
@@ -275,20 +281,20 @@ public:
     }
     
     /// Returns the distance between both vectors.
-    inline double distance (const Vector2& other) const
+    inline VECTOR2_DOUBLE distance (const Vector2& other) const
     {
         return sqrt ((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y));
     }
     
     /// Returns the squared distance between both vectors. This is faster for comparisons as it saves 
     /// on one sqrt operation.
-    inline double sqr_distance (const Vector2& other) const
+    inline VECTOR2_DOUBLE sqr_distance (const Vector2& other) const
     {
         return (x - other.x) * (x - other.x) + (y - other.y) * (y - other.y);
     }
     
     /// Linearly interpolates between this Vector2 and the given Vector2 using the provided value.
-    inline Vector2 lerp (const Vector2& other, double value) const
+    inline Vector2 lerp (const Vector2& other, VECTOR2_DOUBLE value) const
     {
         if (value > 1.0)
         {
@@ -307,7 +313,7 @@ public:
     
     /// Linearly interpolates between this Vector2 and the given Vector2 using the provided value.
     /// This version does not clamp between the two Vectors.
-    inline Vector2 lerp_unclamped (const Vector2& other, double value) const
+    inline Vector2 lerp_unclamped (const Vector2& other, VECTOR2_DOUBLE value) const
     {
         return Vector2 (x + (other.x - x) * value,
                         y + (other.y - y) * value);
@@ -335,10 +341,10 @@ public:
     
     /// Returns a copy of this Vector2 rotated by the given number of degrees. Using rotated_rad is faster
     /// if you already have radians.
-    inline Vector2 rotated_deg (double angle_degrees) const
+    inline Vector2 rotated_deg (VECTOR2_DOUBLE angle_degrees) const
     {
         // convert to radians
-        double radians = angle_degrees * (VECTOR2_MATH_PI / 180.0);
+        VECTOR2_DOUBLE radians = angle_degrees * (VECTOR2_MATH_PI / 180.0);
         return Vector2 (
                         x * sin (radians) + x * cos (radians),
                         x * cos (radians) - y * sin (radians));
@@ -346,7 +352,7 @@ public:
     
     /// Returns a copy of this Vector2 rotated by the given number of degrees. For degrees use
     /// rotated_deg.
-    inline Vector2 rotated_rad (double angle_radians) const
+    inline Vector2 rotated_rad (VECTOR2_DOUBLE angle_radians) const
     {
         return Vector2 (x * cos (angle_radians) - y * sin (angle_radians),
                         x * sin (angle_radians) + x * cos (angle_radians));
