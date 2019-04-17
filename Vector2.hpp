@@ -183,7 +183,12 @@ public:
     
     // vector specific mathematical operations
     
-    
+    /// Magnitude can be described as the length of the vector.
+    /// \return magnitude ("length") of the vector.
+    double magnitude ()
+    {
+        
+    }
     
 };
 
