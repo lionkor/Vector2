@@ -1,10 +1,8 @@
 # Vector2
 
-Vector2 is a templated header-only 2-dimensional vector class with all common vector operations and some useful additional methods.
-
 ## Overview
 
-This is a templated header-only class for a 2D Vector, written in C++17.
+This is a templated header-only class for a 2D Vector, written in C++17, with all common vector operations and some useful additional methods.
 
 ## Features
 
