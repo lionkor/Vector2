@@ -60,46 +60,46 @@ public:
     
     /// Templated conversion operator
     template<typename to_T>
-    operator Vector2<to_T> () const
+    inline operator Vector2<to_T> () const
     {
         return Vector2<to_T> (static_cast<to_T> (x), static_cast<to_T> (y));
     }
     
-    Vector2& operator= (const Vector2& rhs)
+    inline Vector2& operator= (const Vector2& rhs)
     {
         x = rhs.x;
         y = rhs.y;
         return *this;
     }
     
-    friend std::ostream& operator<< (std::ostream& os, const Vector2& vector2)
+    inline friend std::ostream& operator<< (std::ostream& os, const Vector2& vector2)
     {
         os << "x: " << vector2.x << " y: " << vector2.y;
         return os;
     }
     
-    Vector2& operator+= (const Vector2& rhs)
+    inline Vector2& operator+= (const Vector2& rhs)
     {
         x += rhs.x;
         y += rhs.y;
         return *this;
     }
     
-    Vector2& operator-= (const Vector2& rhs)
+    inline Vector2& operator-= (const Vector2& rhs)
     {
         x -= rhs.x;
         y -= rhs.y;
         return *this;
     }
     
-    Vector2& operator*= (const Vector2& rhs)
+    inline Vector2& operator*= (const Vector2& rhs)
     {
         x *= rhs.x;
         y *= rhs.y;
         return *this;
     }
     
-    Vector2& operator/= (const Vector2& rhs)
+    inline Vector2& operator/= (const Vector2& rhs)
     {
         x /= rhs.x;
         y /= rhs.y;
@@ -107,7 +107,7 @@ public:
     }
     
     template<typename rhs_T>
-    Vector2& operator+= (const rhs_T& rhs)
+    inline Vector2& operator+= (const rhs_T& rhs)
     {
         x += rhs;
         y += rhs;
@@ -115,7 +115,7 @@ public:
     }
     
     template<typename rhs_T>
-    Vector2& operator-= (const rhs_T& rhs)
+    inline Vector2& operator-= (const rhs_T& rhs)
     {
         x -= rhs;
         y -= rhs;
@@ -123,7 +123,7 @@ public:
     }
     
     template<typename rhs_T>
-    Vector2& operator*= (const rhs_T& rhs)
+    inline Vector2& operator*= (const rhs_T& rhs)
     {
         x *= rhs;
         y *= rhs;
@@ -131,52 +131,52 @@ public:
     }
     
     template<typename rhs_T>
-    Vector2& operator/= (const rhs_T& rhs)
+    inline Vector2& operator/= (const rhs_T& rhs)
     {
         x /= rhs;
         y /= rhs;
         return *this;
     }
     
-    Vector2 operator- () const
+    inline Vector2 operator- () const
     {
         return Vector2 (-x, -y);
     }
     
-    Vector2 operator+ (const Vector2& rhs) const
+    inline Vector2 operator+ (const Vector2& rhs) const
     {
         return Vector2 (x + rhs.x, y + rhs.y);
     }
     
-    Vector2 operator- (const Vector2& rhs) const
+    inline Vector2 operator- (const Vector2& rhs) const
     {
         return Vector2 (x - rhs.x, y - rhs.y);
     }
     
-    Vector2 operator* (const Vector2& rhs) const 
+    inline Vector2 operator* (const Vector2& rhs) const 
     {
         return Vector2 (x * rhs.x, y * rhs.y);
     }
     
-    Vector2 operator/ (const Vector2& rhs) const
+    inline Vector2 operator/ (const Vector2& rhs) const
     {
         return Vector2 (x / rhs.x, y / rhs.y);
     }
     
     template<typename rhs_T>
-    Vector2 operator+ (const rhs_T& rhs) const
+    inline Vector2 operator+ (const rhs_T& rhs) const
     {
         return Vector2 (x + rhs, y + rhs);
     }
     
     template<typename rhs_T>
-    Vector2 operator- (const rhs_T& rhs) const
+    inline Vector2 operator- (const rhs_T& rhs) const
     {
         return Vector2 (x - rhs, y - rhs);
     }
     
     template<typename rhs_T>
-    Vector2 operator* (const rhs_T& rhs) const
+    inline Vector2 operator* (const rhs_T& rhs) const
     {
         return Vector2 (x * rhs, y * rhs);
     }
@@ -188,40 +188,40 @@ public:
     }
     
     template<typename lhs_T>
-    friend Vector2 operator- (const lhs_T& lhs, const Vector2& rhs)
+    inline friend Vector2 operator- (const lhs_T& lhs, const Vector2& rhs)
     {
         return Vector2 (lhs - rhs.x, lhs - rhs.y);
     }
     
     template<typename lhs_T>
-    friend Vector2 operator* (const lhs_T& lhs, const Vector2& rhs)
+    inline friend Vector2 operator* (const lhs_T& lhs, const Vector2& rhs)
     {
         return Vector2 (lhs * rhs.x, lhs * rhs.y);
     }
     
     template<typename lhs_T>
-    friend Vector2 operator/ (const lhs_T& lhs, const Vector2& rhs)
+    inline friend Vector2 operator/ (const lhs_T& lhs, const Vector2& rhs)
     {
         return Vector2 (lhs / rhs.x, lhs / rhs.y);
     }
     
     template<typename rhs_T>
-    Vector2 operator/ (const rhs_T& rhs) const
+    inline Vector2 operator/ (const rhs_T& rhs) const
     {
         return Vector2 (x / rhs, y / rhs);
     }
     
-    bool operator== (const Vector2& rhs) const
+    inline bool operator== (const Vector2& rhs) const
     {
         return x == rhs.x && y == rhs.y;
     }
     
-    bool operator!= (const Vector2& rhs) const
+    inline bool operator!= (const Vector2& rhs) const
     {
         return !(rhs == *this);
     }
     
-    bool operator< (const Vector2& rhs) const
+    inline bool operator< (const Vector2& rhs) const
     {
         if (x < rhs.x)
             return true;
@@ -230,17 +230,17 @@ public:
         return y < rhs.y;
     }
     
-    bool operator> (const Vector2& rhs) const
+    inline bool operator> (const Vector2& rhs) const
     {
         return rhs < *this;
     }
     
-    bool operator<= (const Vector2& rhs) const
+    inline bool operator<= (const Vector2& rhs) const
     {
         return !(rhs < *this);
     }
     
-    bool operator>= (const Vector2& rhs) const
+    inline bool operator>= (const Vector2& rhs) const
     {
         return !(*this < rhs);
     }
