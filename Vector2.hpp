@@ -272,8 +272,6 @@ public:
     {
         return *this / sqrt (x * x + y * y);
     }
-    
-    
 };
 
 // common type typedefs
@@ -302,16 +300,23 @@ typedef Vector2<unsigned long long> Vector2ull;
 // typedef Vector2<bool>               Vector2b;
 
 // int_fast typedefs
-
+/// fast 8 bit int
 typedef Vector2<int_fast8_t>        Vector2i8;
+/// fast 16 bit int
 typedef Vector2<int_fast16_t>       Vector2i16;
+/// fast 32 bit int
 typedef Vector2<int_fast32_t>       Vector2i32;
+/// fast 64 bit int
 typedef Vector2<int_fast64_t>       Vector2i64;
 
 // uint_fast typedefs
 
+/// fast 8 bit unsigned int
 typedef Vector2<uint_fast8_t>       Vector2u8;
+/// fast 16 bit unsigned int
 typedef Vector2<uint_fast16_t>      Vector2u16;
+/// fast 32 bit unsigned int
 typedef Vector2<uint_fast32_t>      Vector2u32;
+/// fast 64 bit unsigned int
 typedef Vector2<uint_fast64_t>      Vector2u64;
 #endif //VECTOR2_HPP
