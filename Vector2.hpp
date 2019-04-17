@@ -27,7 +27,7 @@
 #include <ostream>
 #include <math.h>
 
-static const double VECTOR2_MATH_PI = 3.14159265358979323846;
+static constexpr double VECTOR2_MATH_PI = 3.14159265358979323846;
 
 /// Represents a 2D vector with two elements of type T and implements
 /// all common operations associated with it.
