@@ -1,6 +1,6 @@
 # Vector2
 
-Contact: development@kortlepel.com
+<sub>Contact: development@kortlepel.com</sub>
 
 ## Overview
 
