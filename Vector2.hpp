@@ -24,7 +24,6 @@
 #ifndef VECTOR2_HPP
 #define VECTOR2_HPP
 
-#include <ostream>
 #include <math.h>
 
 #ifndef VECTOR2_DOUBLE
@@ -47,8 +46,8 @@ public:
     T y;
     
     /// Constructor for Vector2 with first element equal to x and second element equal to y.
-    Vector2 (const T& x, const T& y)
-        : x (x), y (y)
+    Vector2 (T x, T y)
+        : x (std::move (x)), y (std::move (y))
     {}
     
     /// Copy constructor
@@ -68,46 +67,40 @@ public:
     
     /// Templated conversion operator
     template<typename to_T>
-    inline operator Vector2<to_T> () const
+    constexpr operator Vector2<to_T> () const
     {
         return Vector2<to_T> (static_cast<to_T> (x), static_cast<to_T> (y));
     }
     
-    inline Vector2& operator= (const Vector2& rhs)
+    constexpr Vector2& operator= (const Vector2& rhs)
     {
         x = rhs.x;
         y = rhs.y;
         return *this;
     }
     
-    inline friend std::ostream& operator<< (std::ostream& os, const Vector2& vector2)
-    {
-        os << "x: " << vector2.x << " y: " << vector2.y;
-        return os;
-    }
-    
-    inline Vector2& operator+= (const Vector2& rhs)
+    constexpr Vector2& operator+= (const Vector2& rhs)
     {
         x += rhs.x;
         y += rhs.y;
         return *this;
     }
     
-    inline Vector2& operator-= (const Vector2& rhs)
+    constexpr Vector2& operator-= (const Vector2& rhs)
     {
         x -= rhs.x;
         y -= rhs.y;
         return *this;
     }
     
-    inline Vector2& operator*= (const Vector2& rhs)
+    constexpr Vector2& operator*= (const Vector2& rhs)
     {
         x *= rhs.x;
         y *= rhs.y;
         return *this;
     }
     
-    inline Vector2& operator/= (const Vector2& rhs)
+    constexpr Vector2& operator/= (const Vector2& rhs)
     {
         x /= rhs.x;
         y /= rhs.y;
@@ -115,7 +108,7 @@ public:
     }
     
     template<typename rhs_T>
-    inline Vector2& operator+= (const rhs_T& rhs)
+    constexpr Vector2& operator+= (const rhs_T& rhs)
     {
         x += rhs;
         y += rhs;
@@ -123,7 +116,7 @@ public:
     }
     
     template<typename rhs_T>
-    inline Vector2& operator-= (const rhs_T& rhs)
+    constexpr Vector2& operator-= (const rhs_T& rhs)
     {
         x -= rhs;
         y -= rhs;
@@ -131,7 +124,7 @@ public:
     }
     
     template<typename rhs_T>
-    inline Vector2& operator*= (const rhs_T& rhs)
+    constexpr Vector2& operator*= (const rhs_T& rhs)
     {
         x *= rhs;
         y *= rhs;
@@ -139,97 +132,97 @@ public:
     }
     
     template<typename rhs_T>
-    inline Vector2& operator/= (const rhs_T& rhs)
+    constexpr Vector2& operator/= (const rhs_T& rhs)
     {
         x /= rhs;
         y /= rhs;
         return *this;
     }
     
-    inline Vector2 operator- () const
+    constexpr Vector2 operator- () const
     {
         return Vector2 (-x, -y);
     }
     
-    inline Vector2 operator+ (const Vector2& rhs) const
+    constexpr Vector2 operator+ (const Vector2& rhs) const
     {
         return Vector2 (x + rhs.x, y + rhs.y);
     }
     
-    inline Vector2 operator- (const Vector2& rhs) const
+    constexpr Vector2 operator- (const Vector2& rhs) const
     {
         return Vector2 (x - rhs.x, y - rhs.y);
     }
     
-    inline Vector2 operator* (const Vector2& rhs) const 
+    constexpr Vector2 operator* (const Vector2& rhs) const 
     {
         return Vector2 (x * rhs.x, y * rhs.y);
     }
     
-    inline Vector2 operator/ (const Vector2& rhs) const
+    constexpr Vector2 operator/ (const Vector2& rhs) const
     {
         return Vector2 (x / rhs.x, y / rhs.y);
     }
     
     template<typename rhs_T>
-    inline Vector2 operator+ (const rhs_T& rhs) const
+    constexpr Vector2 operator+ (const rhs_T& rhs) const
     {
         return Vector2 (x + rhs, y + rhs);
     }
     
     template<typename rhs_T>
-    inline Vector2 operator- (const rhs_T& rhs) const
+    constexpr Vector2 operator- (const rhs_T& rhs) const
     {
         return Vector2 (x - rhs, y - rhs);
     }
     
     template<typename rhs_T>
-    inline Vector2 operator* (const rhs_T& rhs) const
+    constexpr Vector2 operator* (const rhs_T& rhs) const
     {
         return Vector2 (x * rhs, y * rhs);
     }
     
     template<typename lhs_T>
-    friend Vector2 operator+ (const lhs_T& lhs, const Vector2& rhs) 
+    constexpr friend Vector2 operator+ (const lhs_T& lhs, const Vector2& rhs) 
     {
         return Vector2 (lhs + rhs.x, lhs + rhs.y);
     }
     
     template<typename lhs_T>
-    inline friend Vector2 operator- (const lhs_T& lhs, const Vector2& rhs)
+    constexpr friend Vector2 operator- (const lhs_T& lhs, const Vector2& rhs)
     {
         return Vector2 (lhs - rhs.x, lhs - rhs.y);
     }
     
     template<typename lhs_T>
-    inline friend Vector2 operator* (const lhs_T& lhs, const Vector2& rhs)
+    constexpr friend Vector2 operator* (const lhs_T& lhs, const Vector2& rhs)
     {
         return Vector2 (lhs * rhs.x, lhs * rhs.y);
     }
     
     template<typename lhs_T>
-    inline friend Vector2 operator/ (const lhs_T& lhs, const Vector2& rhs)
+    constexpr friend Vector2 operator/ (const lhs_T& lhs, const Vector2& rhs)
     {
         return Vector2 (lhs / rhs.x, lhs / rhs.y);
     }
     
     template<typename rhs_T>
-    inline Vector2 operator/ (const rhs_T& rhs) const
+    constexpr Vector2 operator/ (const rhs_T& rhs) const
     {
         return Vector2 (x / rhs, y / rhs);
     }
     
-    inline bool operator== (const Vector2& rhs) const
+    constexpr bool operator== (const Vector2& rhs) const
     {
         return x == rhs.x && y == rhs.y;
     }
     
-    inline bool operator!= (const Vector2& rhs) const
+    constexpr bool operator!= (const Vector2& rhs) const
     {
         return !(rhs == *this);
     }
     
-    inline bool operator< (const Vector2& rhs) const
+    constexpr bool operator< (const Vector2& rhs) const
     {
         if (x < rhs.x)
             return true;
@@ -238,17 +231,17 @@ public:
         return y < rhs.y;
     }
     
-    inline bool operator> (const Vector2& rhs) const
+    constexpr bool operator> (const Vector2& rhs) const
     {
         return rhs < *this;
     }
     
-    inline bool operator<= (const Vector2& rhs) const
+    constexpr bool operator<= (const Vector2& rhs) const
     {
         return !(rhs < *this);
     }
     
-    inline bool operator>= (const Vector2& rhs) const
+    constexpr bool operator>= (const Vector2& rhs) const
     {
         return !(*this < rhs);
     }
@@ -256,45 +249,45 @@ public:
     // vector specific mathematical operations
     
     /// Returns the dot product of two vectors.
-    inline VECTOR2_DOUBLE dot (const Vector2& rhs) const
+    constexpr auto dot (const Vector2& rhs) const
     {
         return x * rhs.x + y * rhs.y;
     }
     
     /// Returns magnitude ("length") of the vector.
-    inline VECTOR2_DOUBLE magnitude () const
+    constexpr auto magnitude () const
     {
         return sqrt (x * x + y * y);
     }
     
     /// Returns the squared magnitude ("length") of the vector. This saves one sqrt operation and 
     /// is therefore significant faster for comparing two vector magnitudes.
-    inline VECTOR2_DOUBLE sqr_magnitude () const
+    constexpr auto sqr_magnitude () const
     {
         return x * x + y * y;
     }
     
     /// Returns a vector with all elements as absolute values.
-    inline Vector2 absolute () const
+    constexpr Vector2 absolute () const
     {
         return Vector2 (abs (x), abs (y));
     }
     
     /// Returns the distance between both vectors.
-    inline VECTOR2_DOUBLE distance (const Vector2& other) const
+    constexpr auto distance (const Vector2& other) const
     {
         return sqrt ((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y));
     }
     
     /// Returns the squared distance between both vectors. This is faster for comparisons as it saves 
     /// on one sqrt operation.
-    inline VECTOR2_DOUBLE sqr_distance (const Vector2& other) const
+    constexpr auto sqr_distance (const Vector2& other) const
     {
         return (x - other.x) * (x - other.x) + (y - other.y) * (y - other.y);
     }
     
     /// Linearly interpolates between this Vector2 and the given Vector2 using the provided value.
-    inline Vector2 lerp (const Vector2& other, VECTOR2_DOUBLE value) const
+    constexpr Vector2 lerp (const Vector2& other, VECTOR2_DOUBLE value) const
     {
         if (value > 1.0)
         {
@@ -313,27 +306,27 @@ public:
     
     /// Linearly interpolates between this Vector2 and the given Vector2 using the provided value.
     /// This version does not clamp between the two Vectors.
-    inline Vector2 lerp_unclamped (const Vector2& other, VECTOR2_DOUBLE value) const
+    constexpr Vector2 lerp_unclamped (const Vector2& other, VECTOR2_DOUBLE value) const
     {
         return Vector2 (x + (other.x - x) * value,
                         y + (other.y - y) * value);
     }
     
     /// Returns a normalized copy of this vector. A normalized vector has magnitude/length equal to 1.0.
-    inline Vector2 normalized () const
+    constexpr Vector2 normalized () const
     {
         return *this / sqrt (x * x + y * y);
     }
     
     /// Returns a vector with the elements equal to the square root of the elements of this vector. 
-    inline Vector2 square_root () const
+    constexpr Vector2 square_root () const
     {
         return Vector2 (sqrt (x), sqrt (y));
     }
     
     /// Returns the reflection vector for this vector reflecting off a surface with the specified normal
     /// vector.
-    inline Vector2 reflected (const Vector2& normal) const
+    constexpr Vector2 reflected (const Vector2& normal) const
     {
         Vector2 n = normal.normalized ();
         return static_cast<Vector2> (*this) - 2.0 * (static_cast<Vector2> (*this).dot (n)) * n;
@@ -341,7 +334,7 @@ public:
     
     /// Returns a copy of this Vector2 rotated by the given number of degrees. Using rotated_rad is faster
     /// if you already have radians.
-    inline Vector2 rotated_deg (VECTOR2_DOUBLE angle_degrees) const
+    constexpr Vector2 rotated_deg (VECTOR2_DOUBLE angle_degrees) const
     {
         // convert to radians
         VECTOR2_DOUBLE radians = angle_degrees * (VECTOR2_MATH_PI / 180.0);
@@ -352,12 +345,13 @@ public:
     
     /// Returns a copy of this Vector2 rotated by the given number of degrees. For degrees use
     /// rotated_deg.
-    inline Vector2 rotated_rad (VECTOR2_DOUBLE angle_radians) const
+    constexpr Vector2 rotated_rad (VECTOR2_DOUBLE angle_radians) const
     {
         return Vector2 (x * cos (angle_radians) - y * sin (angle_radians),
                         x * sin (angle_radians) + x * cos (angle_radians));
     }
 };
+
 
 // common type typedefs
 
