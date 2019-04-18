@@ -341,7 +341,7 @@ public:
     constexpr Vector2 rotated_deg (double angle_degrees) const
     {
         // convert to radians
-        double radians = angle_degrees * (VECTOR2_MATH_PI<double> / 180.0);
+        long double radians = angle_degrees * (VECTOR2_MATH_PI<long double> / 180.0);
         return Vector2 (
                         x * sin (radians) + x * cos (radians),
                         x * cos (radians) - y * sin (radians));
