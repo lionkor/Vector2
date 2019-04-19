@@ -68,11 +68,6 @@ public:
         : x (std::move (x)), y (std::move (y))
     {}
     
-    /// Copy constructor
-    Vector2 (const Vector2& vector)
-        : x (vector.x), y (vector.y)
-    {}
-    
     /// Constructor for Vector2 with both elements equal to n. 
     explicit Vector2 (const T& n)
         : x (n), y (n)
@@ -95,13 +90,6 @@ public:
     constexpr operator Vector2<to_T> () const
     {
         return Vector2<to_T> (static_cast<to_T> (x), static_cast<to_T> (y));
-    }
-    
-    constexpr Vector2& operator= (const Vector2& rhs)
-    {
-        x = rhs.x;
-        y = rhs.y;
-        return *this;
     }
     
     constexpr Vector2& operator+= (const Vector2& rhs)
