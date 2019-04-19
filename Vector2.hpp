@@ -25,11 +25,32 @@
 #define VECTOR2_HPP
 
 #include <math.h>
+#include <cstring>
+#include <cfloat>
 
 // defining it to 1000 digits so it can be used with a much more precise VECTOR2_DOUBLE type than double and still 
 // achieve high accuracy.
 template<typename T>
 static constexpr T VECTOR2_MATH_PI { static_cast<T> (3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989L) };
+
+static bool f_equality (const float first, const float second);
+static bool d_equality (const double first, const double second);
+static bool ld_equality (const long double first, const long double second);
+
+template<typename T>
+constexpr bool is_float () { return false; }
+template<>
+constexpr bool is_float<float> () { return true; }
+
+template<typename T>
+constexpr bool is_double () { return false; }
+template<>
+constexpr bool is_double<double> () { return true; }
+
+template<typename T>
+constexpr bool is_long_double () { return false; }
+template<>
+constexpr bool is_long_double<long double> () { return true; }
 
 /// Represents a 2D vector with two elements of type T and implements
 /// all common operations associated with it.
@@ -216,9 +237,20 @@ public:
         return Vector2 (x / rhs, y / rhs);
     }
     
-    constexpr bool operator== (const Vector2& rhs) const
+    template<typename rhs_T>
+    constexpr bool operator== (const Vector2<rhs_T>& rhs) const
     {
-        return x == rhs.x && y == rhs.y;
+        if (is_float<T> () || is_float<rhs_T> ())
+            return f_equality (x, rhs.x) &&
+                   f_equality (y, rhs.y);
+        else if (is_double<T> () || is_double<rhs_T> ()) 
+            return d_equality (x, rhs.x) && 
+                   d_equality (y, rhs.y);
+        else if (is_long_double<T> () || is_double<rhs_T> ())
+            return ld_equality (x, rhs.x) &&
+                   ld_equality (y, rhs.y);
+        else
+            return x == rhs.x && y == rhs.y;
     }
     
     constexpr bool operator!= (const Vector2& rhs) const
@@ -356,6 +388,80 @@ public:
     }
 };
 
+// The following is hacked together from a bitbashing.io article about floating point comparisons.
+
+// According to the standard, there are three floating point types: float, double, long double.
+// For this reason the below code will only cover those. For other types, either cast or write
+// your own functions. 
+
+// The defines make it possible to override the function used for comparison. In case you need
+// something faster & less accurate, you can use a simple `abs(a-b) < epsilon` for a big epsilon 
+// like 0.00001. The functions used below attempt to make epsilon as accurate as possible.
+
+// float comparisons
+#ifndef VECTOR2_FLOAT_COMPARE 
+#define VECTOR2_FLOAT_COMPARE(first, second) f_equality(first, second)
+#endif
+
+// double comparisons
+#ifndef VECTOR2_DOUBLE_COMPARE
+#define VECTOR2_DOUBLE_COMPARE(first, second) d_equality(first, second)
+#endif
+
+// long double comparisons
+#ifndef VECTOR2_LONG_DOUBLE_COMPARE
+#define VECTOR2_LONG_DOUBLE_COMPARE(first, second) ld_equality(first, second)
+#endif
+
+// ulp = unit of least precision
+
+template<typename int_T, typename float_T>
+static int_T ulp_distance (const float_T a, const float_T b)
+{
+    if (a == b) return 0;
+    
+    const auto max = std::numeric_limits<int_T>::max ();
+    
+    // check for NaN and inf
+    if (isnan (a) || isnan (b)) return max;
+    if (isinf (a) || isinf (b)) return max;
+    
+    static_assert (sizeof (float_T) == sizeof (int_T), "float is a weird size");
+    
+    int_T ia;
+    int_T ib;
+    
+    // copy memory to integer memory so we can compare them
+    // and find out the proper ulp
+    memcpy (&ia, &a, sizeof (float_T));
+    memcpy (&ib, &b, sizeof (float_T));
+    
+    // check that they're both signed or both unsigned
+    if ((ia < 0) != (ib < 0)) return max;
+    
+    int_T distance = ia - ib;
+    
+    if (distance < 0) distance = -distance;
+    
+    return distance;
+}
+
+bool f_equality (const float first, const float second)
+{
+    return abs (first - second) <= 1.0f / ulp_distance<int32_t, float> (first, second);
+}
+
+bool d_equality (const double first, const double second)
+{
+    return abs (first - second) <= 1.0 / ulp_distance<int64_t, double> (first, second);
+}
+
+bool ld_equality (const long double first, const long double second)
+{
+    // uses LDBL_EPSILON since no int with equivalent size to long double exists
+    return abs (first - second) <= LDBL_EPSILON;
+}
+
 
 // common type typedefs
 
@@ -363,6 +469,8 @@ public:
 typedef Vector2<float>              Vector2f;
 /// double
 typedef Vector2<double>             Vector2d;
+/// long double
+typedef Vector2<long double>        Vector2ld;
 /// char
 typedef Vector2<signed char>        Vector2c;
 /// unsigned char
