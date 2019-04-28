@@ -28,8 +28,7 @@
 #include <string.h>
 #include <float.h>
 
-// defining it to 1000 digits so it can be used with a much more precise VECTOR2_DOUBLE type than double and still 
-// achieve high accuracy.
+// defining pi to enough digits to fill long double
 template<typename T>
 static constexpr T VECTOR2_MATH_PI { static_cast<T> (3.141592653589793238462643383279502884197169L) };
 
@@ -37,16 +36,19 @@ static bool f_equality (const float first, const float second);
 static bool d_equality (const double first, const double second);
 static bool ld_equality (const long double first, const long double second);
 
+/// returns true if given type is float
 template<typename T>
 constexpr bool is_float () { return false; }
 template<>
 constexpr bool is_float<float> () { return true; }
 
+/// returns true if given type is double
 template<typename T>
 constexpr bool is_double () { return false; }
 template<>
 constexpr bool is_double<double> () { return true; }
 
+/// returns true if given type is long double
 template<typename T>
 constexpr bool is_long_double () { return false; }
 template<>
@@ -228,6 +230,7 @@ public:
     template<typename rhs_T>
     constexpr bool operator== (const Vector2<rhs_T>& rhs) const
     {
+        // comparison of floats based on their accuracy
         if (is_float<T> () || is_float<rhs_T> ())
             return f_equality (x, rhs.x) &&
                    f_equality (y, rhs.y);
