@@ -25,8 +25,8 @@
 #define VECTOR2_HPP
 
 #include <math.h>
-#include <cstring>
-#include <cfloat>
+#include <string.h>
+#include <float.h>
 
 // defining it to 1000 digits so it can be used with a much more precise VECTOR2_DOUBLE type than double and still 
 // achieve high accuracy.
