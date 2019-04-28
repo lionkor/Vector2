@@ -359,7 +359,7 @@ public:
         return static_cast<Vector2> (*this) - 2.0 * (static_cast<Vector2> (*this).dot (n)) * n;
     }
     
-    /// Returns a copy of this Vector2 rotated by the given number of degrees. Using rotated_rad is faster
+    /// Returns a copy of this Vector2 rotated CLOCKWISE by the given number of degrees. Using rotated_rad is faster
     /// if you already have radians.
     constexpr Vector2 rotated_deg (double angle_degrees) const
     {
@@ -370,7 +370,7 @@ public:
                         -x * sin (radians) + y * cos (radians));
     }
     
-    /// Returns a copy of this Vector2 rotated by the given number of degrees. For degrees use
+    /// Returns a copy of this Vector2 rotated CLOCKWISE by the given number of degrees. For degrees use
     /// rotated_deg.
     constexpr Vector2 rotated_rad (double angle_radians) const
     {
