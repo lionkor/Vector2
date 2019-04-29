@@ -24,9 +24,11 @@
 #ifndef VECTOR2_HPP
 #define VECTOR2_HPP
 
-#include <math.h>
-#include <string.h>
-#include <float.h>
+#include <cmath>
+#include <utility>
+#include <limits>
+#include <cstring>
+#include <cfloat>
 
 // defining pi to enough digits to fill long double
 template<typename T>
@@ -406,6 +408,12 @@ public:
 
 // ulp = unit of least precision
 
+// NOTE: The following approach, although quite unsafe, is used because EPSILONs are very inaccurate when comparing 
+// floats much larger than or much closer to zero than 1.0. Epsilon is only really accurate around 1.0,
+// so that is why this method is used instead. 
+// Instead of this, boost's floating point comparison(s) (which do a similar thing) may be used, but this header
+// does not want to introduce such a big dependency.
+
 template<typename int_T, typename float_T>
 static int_T ulp_distance (const float_T a, const float_T b)
 {
@@ -414,10 +422,10 @@ static int_T ulp_distance (const float_T a, const float_T b)
     const auto max = std::numeric_limits<int_T>::max ();
     
     // check for NaN and inf
-    if (isnan (a) || isnan (b)) return max;
-    if (isinf (a) || isinf (b)) return max;
+    if (std::isnan (a) || std::isnan (b)) return max;
+    if (std::isinf (a) || std::isinf (b)) return max;
     
-    static_assert (sizeof (float_T) == sizeof (int_T), "float is a weird size");
+    static_assert (sizeof (float_T) == sizeof (int_T), "float and/or int are/is a weird size");
     
     int_T ia;
     int_T ib;
@@ -439,18 +447,18 @@ static int_T ulp_distance (const float_T a, const float_T b)
 
 bool f_equality (const float first, const float second)
 {
-    return abs (first - second) <= 1.0f / ulp_distance<int32_t, float> (first, second);
+    return fabs (first - second) <= 1.0f / ulp_distance<int32_t, float> (first, second);
 }
 
 bool d_equality (const double first, const double second)
 {
-    return abs (first - second) <= 1.0 / ulp_distance<int64_t, double> (first, second);
+    return fabs (first - second) <= 1.0 / ulp_distance<int64_t, double> (first, second);
 }
 
 bool ld_equality (const long double first, const long double second)
 {
     // uses LDBL_EPSILON since no int with equivalent size to long double exists
-    return abs (first - second) <= LDBL_EPSILON;
+    return fabsl (first - second) <= LDBL_EPSILON;
 }
 
 
