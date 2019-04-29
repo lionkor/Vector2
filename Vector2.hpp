@@ -30,7 +30,7 @@
 
 // defining pi to enough digits to fill long double
 template<typename T>
-static constexpr T VECTOR2_MATH_PI { static_cast<T> (3.141592653589793238462643383279502884197169L) };
+static constexpr T V2_PI { static_cast<T> (3.141592653589793238462643383279502884197169L) };
 
 static bool f_equality (const float first, const float second);
 static bool d_equality (const double first, const double second);

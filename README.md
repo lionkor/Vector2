@@ -6,21 +6,29 @@
 
 This is a templated header-only class for a 2D Vector, written in C++17, with all common vector operations and some useful additional methods.
 
+
 ## Features
 
-* Header-only & MIT licensed.
+* **Header**-only, **MIT** licensed, **templated**.
 
-* All common operators are implemented and templated ones are used, for math with non-primitive types.
+* All equality- and relational operators
 
-* Consistent naming and documentation.
+* **Supported operations:**
+    - \+ \- \* \/ with another vector
+    - \+ \- \* \/ with any scalar (templated)
+    - rotation ([deg](#rotate-(degrees)) & [rad](#rotate-(radians)))
+    - [reflection (using surface normal)](#reflect-off-surface-with-normal_vec)
+    - [distance](#distance-to-other_vec) & [squared distance](#squared-distance-to-other_vec)
+    - [magnitude (length)](#magnitude) & [squared magnitude](#squared-magnitude)
+    - [normalization](#normalize)
+    - [dot product](#dot-product-with-other_vec)
+    - linear interpolation ([clamped](#linearly-interpolate-with-other_vec) & [unclamped](#linearly-interpolate-with-other_vec-unclamped))
+    - [square root](#square-root)
 
-* Many useful typedefs with consistent naming, like `Vector2f` and `Vector2i`.
+* Typedefs for all primitive types (`Vector2f, Vector2i, Vector2d`, etc.)
 
-* Written for speed and ease-of-use.
 
-* Many useful methods like rotation, reflection and interpolation.
-
-### Progress
+## Development Progress
 
 - [x] Common operators
 - [x] Templated operators
@@ -36,3 +44,91 @@ This is a templated header-only class for a 2D Vector, written in C++17, with al
 - Vector-rotation is implemented to rotate CLOCKWISE.
 - `rotated_rad` _is possibly_ faster than `rotated_deg`, since the latter converts from degrees to radians first.
 - The typedefs which specify size (for example `Vector2i8`) use `int_fast8_t` and similar (`fast` variant). Feel free to open an issue if this causes problems.
+
+## How to use
+
+It should be intuitive, but here's *how intuitive*:
+
+### **Construct a vector**
+
+With typedefs...
+
+```cpp
+Vector2f vec {};                // (0, 0)
+
+Vector2u vec (6);               // (6, 6)
+
+Vector2d vec { 2.0, 5.0 };      // (2.0, 5.0)
+
+Vector2i vec (6, -15);          // (6, -15)
+```
+
+...or the typey way:
+
+```cpp
+Vector2<long double> vec (2.5L, -18.5L);
+```
+
+### **Vector Operations**
+
+
+#### rotate (degrees)
+```cpp
+auto result_vec = vec.rotated_deg (45.0);
+```
+
+#### rotate (radians)
+```cpp
+auto result_vec = vec.rotated_rad (PI / 3.0);
+```
+
+#### linearly interpolate with `other_vec`
+```cpp
+auto result_vec = vec.lerp (other_vec, 0.75);
+```
+
+#### linearly interpolate with `other_vec` unclamped
+<sup>unclamped means that the value is **not** restricted between 0.0 and 1.0.</sup>
+```cpp
+auto result_vec = vec.lerp_unclamped (other_vec, 1.5);
+```
+
+#### reflect off surface with `normal_vec`
+```cpp
+auto result_vec = vec.reflected (normal_vec);
+```
+
+#### distance to `other_vec`
+```cpp
+auto result_vec = vec.distance (other_vec);
+```
+
+#### squared distance to `other_vec`
+```cpp
+auto result_vec = vec.sqr_distance (other_vec);
+```
+
+#### magnitude
+```cpp
+double mag = vec.magnitude ();
+```
+
+#### squared magnitude
+```cpp
+double sqr_mag = vec.sqr_magnitude ();
+```
+
+#### dot product with `other_vec`
+```cpp
+auto result_vec = vec.dot (other_vec);
+```
+
+#### square root
+```cpp
+auto result_vec = vec.square_root ();
+```
+
+#### normalize
+```cpp
+result_vec = vec.normalized ();
+```
