@@ -82,12 +82,6 @@ public:
         : x (), y ()
     {}
     
-    friend std::ostream& operator<< (std::ostream& os, const Vector2& vector2)
-    {
-        os << "x: " << vector2.x << " y: " << vector2.y;
-        return os;
-    }
-    
     /// Templated conversion operator
     template<typename to_T>
     constexpr operator Vector2<to_T> () const
