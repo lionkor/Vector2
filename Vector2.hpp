@@ -29,6 +29,7 @@
 #include <limits>
 #include <cstring>
 #include <cfloat>
+#include <cstdint> // int_fast types
 
 // defining pi to enough digits to fill long double
 template<typename T>
