@@ -1,5 +1,7 @@
 # Vector2
 
+**No longer in development. Use `glm` instead.**
+
 <sub>Contact: development@kortlepel.com</sub>
 
 - [Overview](#overview)
